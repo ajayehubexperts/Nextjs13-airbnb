@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import useRegisterModel from "../../hooks/useRegisterModel";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
+import Model from "./Model";
 const RegisterModel = () => {
-  const RegisterModel = useRegisterModel();
+  const registerModel = useRegisterModel();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -20,10 +22,9 @@ const RegisterModel = () => {
   });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    axios
-      .post("/api/register", data)
+    axios.post("/api/register", data)
       .then(() => {
-        RegisterModel.onClose();
+        registerModel.onClose();
       })
       .catch((error) => {
         console.log(error);
@@ -35,10 +36,10 @@ const RegisterModel = () => {
   return (
     <Model
       disabled={isLoading}
-      isOpen={RegisterModel.isOpen}
+      isOpen={registerModel.isOpen}
       title="Register"
       actionLabel="Continue"
-      onClose={RegisterModel.onClose}
+      onClose={registerModel.onClose}
       onSubmit={handleSubmit(onSubmit)}
     />
   );

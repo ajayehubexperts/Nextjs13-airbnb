@@ -1,7 +1,10 @@
-"use client";
+'use client';
+
 import { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+
 import Button from "../Button";
+
 interface ModelProps {
   isOpen?: boolean;
   onClose: () => void;
@@ -12,23 +15,23 @@ interface ModelProps {
   actionLabel: string;
   disabled?: boolean;
   secondaryAction?: () => void;
-  secondaryLabel?: string;
   secondaryActionLabel?: string;
 }
+
 const Model: React.FC<ModelProps> = ({
   isOpen,
   onClose,
   onSubmit,
   title,
   body,
-  footer,
   actionLabel,
+  footer,
   disabled,
   secondaryAction,
-  secondaryLabel,
-  secondaryActionLabel,
+  secondaryActionLabel
 }) => {
   const [showModel, setShowModel] = useState(isOpen);
+
   useEffect(() => {
     setShowModel(isOpen);
   }, [isOpen]);
@@ -37,26 +40,30 @@ const Model: React.FC<ModelProps> = ({
     if (disabled) {
       return;
     }
-    setShowModel(isOpen);
+
+    setShowModel(false);
     setTimeout(() => {
       onClose();
-    }, 300);
-  }, [disabled, onClose]);
+    }, 300)
+  }, [onClose, disabled]);
 
   const handleSubmit = useCallback(() => {
     if (disabled) {
       return;
     }
+
     onSubmit();
-  }, [disabled, onSubmit]);
+  }, [onSubmit, disabled]);
 
   const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
       return;
     }
-  }, [disabled, secondaryAction]);
 
-  if (!open) {
+    secondaryAction();
+  }, [secondaryAction, disabled]);
+
+  if (!isOpen) {
     return null;
   }
 
@@ -77,8 +84,7 @@ const Model: React.FC<ModelProps> = ({
           bg-neutral-800/70
         "
       >
-        <div
-          className="
+        <div className="
           relative 
           w-full
           md:w-4/6
@@ -92,17 +98,14 @@ const Model: React.FC<ModelProps> = ({
           "
         >
           {/*content*/}
-          <div
-            className={`
+          <div className={`
             translate
             duration-300
             h-full
-            ${showModel ? "translate-y-0" : "translate-y-full"}
-            ${showModel ? "opacity-100" : "opacity-0"}
-          `}
-          >
-            <div
-              className="
+            ${showModel ? 'translate-y-0' : 'translate-y-full'}
+            ${showModel ? 'opacity-100' : 'opacity-0'}
+          `}>
+            <div className="
               translate
               h-full
               lg:h-auto
@@ -120,8 +123,7 @@ const Model: React.FC<ModelProps> = ({
             "
             >
               {/*header*/}
-              <div
-                className="
+              <div className="
                 flex 
                 items-center 
                 p-6
@@ -144,10 +146,14 @@ const Model: React.FC<ModelProps> = ({
                 >
                   <IoMdClose size={18} />
                 </button>
-                <div className="text-lg font-semibold">{title}</div>
+                <div className="text-lg font-semibold">
+                  {title}
+                </div>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto">{body}</div>
+              <div className="relative p-6 flex-auto">
+                {body}
+              </div>
               {/*footer*/}
               <div className="flex flex-col gap-2 p-6">
                 <div
@@ -167,7 +173,6 @@ const Model: React.FC<ModelProps> = ({
                       outline
                     />
                   )}
-
                   <Button
                     disabled={disabled}
                     label={actionLabel}
@@ -182,6 +187,6 @@ const Model: React.FC<ModelProps> = ({
       </div>
     </>
   );
-};
+}
 
 export default Model;
