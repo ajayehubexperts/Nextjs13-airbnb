@@ -1,67 +1,67 @@
-'use client';
+"use client";
 import { useCallback, useEffect, useState } from "react";
-import { IoMdClose } from 'react-icons/io';
+import { IoMdClose } from "react-icons/io";
+import Button from "../Button";
 interface ModelProps {
-    isOpen?: boolean;
-    onClose: () => void;
-    onSubmit: () => void;
-    title?: string;
-    body?: React.ReactElement;
-    footer?: React.ReactElement;
-    actionLabel: string;
-    disabled?: boolean;
-    secondaryAction?: () => void;
-    secondaryLabel?: string;
+  isOpen?: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+  title?: string;
+  body?: React.ReactElement;
+  footer?: React.ReactElement;
+  actionLabel: string;
+  disabled?: boolean;
+  secondaryAction?: () => void;
+  secondaryLabel?: string;
 }
 const Model: React.FC<ModelProps> = ({
-    isOpen,
-    onClose,
-    onSubmit,
-    title,
-    body,
-    footer,
-    actionLabel,
-    disabled,
-    secondaryAction,
-    secondaryLabel
+  isOpen,
+  onClose,
+  onSubmit,
+  title,
+  body,
+  footer,
+  actionLabel,
+  disabled,
+  secondaryAction,
+  secondaryLabel,
 }) => {
+  const [showModel, setShowModel] = useState(isOpen);
+  useEffect(() => {
+    setShowModel(isOpen);
+  }, [isOpen]);
 
-    const [showModel, setShowModel] = useState(isOpen);
-    useEffect(() => {
-        setShowModel(isOpen);
-    }, [isOpen]);
-
-    const handleClose = useCallback(() => {
-        if (disabled) {
-            return;
-        }
-        setShowModel(isOpen);
-        setTimeout(() => {
-            onClose();
-        }, 300)
-    }, [disabled, onClose]);
-
-    const handleSubmit = useCallback(() => {
-        if (disabled) {
-            return;
-        }
-        onSubmit();
-    }, [disabled, onSubmit]);
-
-    const handleSecondaryAction = useCallback(() => {
-        if (disabled || !secondaryAction) {
-            return;
-        }
-    }, [disabled, secondaryAction]);
-
-    if (!open) {
-        return null;
+  const handleClose = useCallback(() => {
+    if (disabled) {
+      return;
     }
+    setShowModel(isOpen);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  }, [disabled, onClose]);
 
-    return (
-        <>
-            <div
-                className="
+  const handleSubmit = useCallback(() => {
+    if (disabled) {
+      return;
+    }
+    onSubmit();
+  }, [disabled, onSubmit]);
+
+  const handleSecondaryAction = useCallback(() => {
+    if (disabled || !secondaryAction) {
+      return;
+    }
+  }, [disabled, secondaryAction]);
+
+  if (!open) {
+    return null;
+  }
+
+  return (
+    <>
+      <div
+        className="
           justify-center 
           items-center 
           flex 
@@ -74,8 +74,9 @@ const Model: React.FC<ModelProps> = ({
           focus:outline-none
           bg-neutral-800/70
         "
-            >
-                <div className="
+      >
+        <div
+          className="
           relative 
           w-full
           md:w-4/6
@@ -87,16 +88,19 @@ const Model: React.FC<ModelProps> = ({
           lg:h-auto
           md:h-auto
           "
-                >
-                    {/*content*/}
-                    <div className={`
+        >
+          {/*content*/}
+          <div
+            className={`
             translate
             duration-300
             h-full
-            ${showModel ? 'translate-y-0' : 'translate-y-full'}
-            ${showModel ? 'opacity-100' : 'opacity-0'}
-          `}>
-                        <div className="
+            ${showModel ? "translate-y-0" : "translate-y-full"}
+            ${showModel ? "opacity-100" : "opacity-0"}
+          `}
+          >
+            <div
+              className="
               translate
               h-full
               lg:h-auto
@@ -112,9 +116,10 @@ const Model: React.FC<ModelProps> = ({
               outline-none 
               focus:outline-none
             "
-                        >
-                            {/*header*/}
-                            <div className="
+            >
+              {/*header*/}
+              <div
+                className="
                 flex 
                 items-center 
                 p-6
@@ -123,9 +128,9 @@ const Model: React.FC<ModelProps> = ({
                 relative
                 border-b-[1px]
                 "
-                            >
-                                <button
-                                    className="
+              >
+                <button
+                  className="
                     p-1
                     border-0 
                     hover:opacity-70
@@ -133,51 +138,47 @@ const Model: React.FC<ModelProps> = ({
                     absolute
                     left-9
                   "
-                                    onClick={handleClose}
-                                >
-                                    <IoMdClose size={18} />
-                                </button>
-                                <div className="text-lg font-semibold">
-                                    {title}
-                                </div>
-                            </div>
-                            {/*body*/}
-                            <div className="relative p-6 flex-auto">
-                                {body}
-                            </div>
-                            {/*footer*/}
-                            <div className="flex flex-col gap-2 p-6">
-                                <div
-                                    className="
+                  onClick={handleClose}
+                >
+                  <IoMdClose size={18} />
+                </button>
+                <div className="text-lg font-semibold">{title}</div>
+              </div>
+              {/*body*/}
+              <div className="relative p-6 flex-auto">{body}</div>
+              {/*footer*/}
+              <div className="flex flex-col gap-2 p-6">
+                <div
+                  className="
                     flex 
                     flex-row 
                     items-center 
                     gap-4 
                     w-full
                   "
-                                >
-                                    {/* {secondaryAction && secondaryActionLabel && (
+                >
+                  {/* {secondaryAction && secondaryActionLabel && (
                                         <Button
                                             disabled={disabled}
                                             label={secondaryActionLabel}
                                             onClick={handleSecondaryAction}
                                             outline
                                         />
-                                    )}
-                                    <Button
-                                        disabled={disabled}
-                                        label={actionLabel}
-                                        onClick={handleSubmit}
-                                    /> */}
-                                </div>
-                                {footer}
-                            </div>
-                        </div>
-                    </div>
+                                    )} */}
+                  <Button
+                    disabled={disabled}
+                    label={actionLabel}
+                    onClick={handleSubmit}
+                  />
                 </div>
+                {footer}
+              </div>
             </div>
-        </>
-    )
-}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Model;
