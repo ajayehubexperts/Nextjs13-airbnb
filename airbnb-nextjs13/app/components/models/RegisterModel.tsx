@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import useRegisterModel from "../../hooks/useRegisterModel";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import Model from "./Model";
 import Heading from "../Heading";
+import Input from "../inputs/input";
+
 const RegisterModel = () => {
   const registerModel = useRegisterModel();
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +39,7 @@ const RegisterModel = () => {
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title={"Welcome to Airbnb"} subtitle={"Create a new account"} />
+      <Input />
     </div>
   )
   return (
